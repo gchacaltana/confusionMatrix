@@ -53,12 +53,16 @@ class ConfusionMatrix extends SymfonyCommand {
     }
 
     protected function main(InputInterface $input, OutputInterface $output) {
-        $this->_input = $input;
-        $this->_output = $output;
-        $this->_displayHead();
-        $this->_setAttributes();
-        $this->_displayAttributes();
-        $this->_displayMetrics();
+        try {
+            $this->_input = $input;
+            $this->_output = $output;
+            $this->_displayHead();
+            $this->_setAttributes();
+            $this->_displayAttributes();
+            $this->_displayMetrics();
+        } catch (\ErrorException $ex) {
+            $output->writeln($ex->getMessage());
+        }
     }
 
     private function _displayHead() {
@@ -101,35 +105,40 @@ class ConfusionMatrix extends SymfonyCommand {
      * Devuelve la métrica de sensibilidad
      */
     private function _getSensitivity() {
-        return round($this->_tp / ($this->_tp + $this->_fn), 4);
+        $divisor = $this->_tp + $this->_fn;
+        return ($divisor > 0) ? round($this->_tp / $divisor, 4) : "";
     }
 
     /**
      * Devuelve la métrica de especificidad
      */
     private function _getSpecificity() {
-        return round($this->_tn / ($this->_fp + $this->_tn), 4);
+        $divisor = $this->_fp + $this->_tn;
+        return ($divisor > 0) ? round($this->_tn / $divisor, 4) : "";
     }
 
     /**
      * Devuelve la métrica de precisión
      */
     private function _getPrecision() {
-        return round($this->_tp / ($this->_tp + $this->_fp), 4);
+        $divisor = $this->_tp + $this->_fp;
+        return ($divisor > 0) ? round($this->_tp / ($divisor), 4) : "";
     }
 
     /**
      * Devuelve la métrica de exactitud
      */
     private function _getAccuracy() {
-        return round(($this->_tp + $this->_tn) / ($this->_tp + $this->_fp + $this->_tn + $this->_fn), 4);
+        $divisor = $this->_tp + $this->_fp + $this->_tn + $this->_fn;
+        return ($divisor > 0) ? round(($this->_tp + $this->_tn) / $divisor, 4) : "";
     }
 
     /**
      * Devuelve la métrica de F1 Score
      */
     private function _getF1Score() {
-        return round((2 * $this->_tp) / (2 * $this->_tp + $this->_fp + $this->_fn), 4);
+        $divisor = 2 * $this->_tp + $this->_fp + $this->_fn;
+        return ($divisor > 0) ? round((2 * $this->_tp) / $divisor, 4) : "";
     }
 
 }
