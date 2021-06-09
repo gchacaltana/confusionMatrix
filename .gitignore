@@ -2,6 +2,8 @@
 composer.phar
 /vendor/
 
+composer.lock
+
 ### PHPUnit ###
 # Covers PHPUnit
 # Reference: https://phpunit.de/
