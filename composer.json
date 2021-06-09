@@ -1,4 +1,5 @@
 {
+    "name": "ConfusionMatrix",
     "require": {
         "symfony/console": "^4.4"
     }
