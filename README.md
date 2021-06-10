@@ -6,12 +6,12 @@ Esta es una aplicación de consola desarrollada en PHP y Symfony Console.
 
 * Clonar repositorio [aquí](https://github.com/gchacaltana/confusionMatrix.git).
 * cd `confusionMatrix`
-* Ejecutar en su consola `composer require symfony/console
+* Ejecutar en su consola `composer require symfony/console`
 
 # Uso
   
     Uso:
-    ./App.php [options] [arguments]
+    ./App.php [options] [commands] [arguments]
 
     Options:
     -h, --help            Muestra mensajes de ayuda
@@ -20,12 +20,12 @@ Esta es una aplicación de consola desarrollada en PHP y Symfony Console.
         --ansi            Forzar ANSI output
         --no-ansi         Inhabilitar ANSI output
 
-    Comandos disponibles:
+    Commands:
     main   Calcula y muestra métricas de la Matriz de Confusión.
     help   Muestra mensaje de ayuda para el comand-line
     list   Lista de metodos (commands)
 	
-	Argumentos:
+	Arguments:
 	<TP> Verdadero Positivo
 	<TN> Verdadero Negativo
 	<FP> Falso Positivo
