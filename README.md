@@ -9,7 +9,7 @@ Esta es una aplicación de consola desarrollada en PHP y Symfony Console.
 * Ejecutar en su consola `composer require symfony/console`
 
 # Uso
-  
+
     Uso:
     ./App.php [options] [commands] [arguments]
 
@@ -24,7 +24,7 @@ Esta es una aplicación de consola desarrollada en PHP y Symfony Console.
     main   Calcula y muestra métricas de la Matriz de Confusión.
     help   Muestra mensaje de ayuda para el comand-line
     list   Lista de metodos (commands)
-	
+
 	Arguments:
 	<TP> Verdadero Positivo
 	<TN> Verdadero Negativo
@@ -53,5 +53,6 @@ Specificity = 0.3333
 Precision = 0.6667
 Accuracy = 0.6452
 F1 Score = 0.7442
+Recall = 0.8421
 
 ```
