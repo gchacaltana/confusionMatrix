@@ -98,6 +98,7 @@ class ConfusionMatrix extends SymfonyCommand {
             'Precision = ' . $this->_getPrecision(),
             'Accuracy = ' . $this->_getAccuracy(),
             'F1 Score = ' . $this->_getF1Score(),
+            'Recall = ' . $this->_getRecall()
         ]);
     }
 
@@ -139,6 +140,14 @@ class ConfusionMatrix extends SymfonyCommand {
     private function _getF1Score() {
         $divisor = 2 * $this->_tp + $this->_fp + $this->_fn;
         return ($divisor > 0) ? round((2 * $this->_tp) / $divisor, 4) : "";
+    }
+
+    /**
+     * Devuelve la métrica de Exhaustividad (Recall)
+     */
+    private function _getRecall() {
+        $divisor = $this->_tp + $this->_fn;
+        return ($divisor > 0) ? round($this->_tp / $divisor, 4) : "";
     }
 
 }
