@@ -32,6 +32,14 @@ class ConfusionMatrix {
      */
     private $_fn;
 
+    /**
+     * Constructor de la clase ConfusionMatrix
+     * @access public
+     * @param int $tp Verdadero positivo
+     * @param int $tn Verdadero Negativo
+     * @param int $fp Falso positivo
+     * @param int $fn Falso Negativo
+     */
     public function __construct(int $tp, int $tn, int $fp, int $fn) {
         $this->_tp = intval($tp);
         $this->_tn = intval($tn);
@@ -39,18 +47,38 @@ class ConfusionMatrix {
         $this->_fn = intval($fn);
     }
 
+    /**
+     * Devuelve el valor Verdadero Positivo de la Matrix de Confusión
+     * @access public
+     * @return int VerdaderoPositivo
+     */
     public function getTruePositive() {
         return $this->_tp;
     }
 
+    /**
+     * Devuelve el valor Verdadero Negativo de la Matrix de Confusión
+     * @access public
+     * @return int Verdadero Negativo
+     */
     public function getTrueNegative() {
         return $this->_tn;
     }
 
+    /**
+     * Devuelve el valor Falso Positivo de la Matrix de Confusión
+     * @access public
+     * @return int Falso Positivo
+     */
     public function getFalsePositive() {
         return $this->_fp;
     }
 
+    /**
+     * Devuelve el valor Falso Negativo de la Matrix de Confusión
+     * @access public
+     * @return int Falso Negativo
+     */
     public function getFalseNegative() {
         return $this->_fn;
     }
