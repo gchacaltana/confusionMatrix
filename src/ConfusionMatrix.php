@@ -10,23 +10,7 @@
 
 namespace Console;
 
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-
-class ConfusionMatrix extends SymfonyCommand {
-
-    /**
-     * @var InputInterface input
-     */
-    private $_input;
-
-    /**
-     * @var OutputInterface output
-     */
-    private $_output;
+class ConfusionMatrix {
 
     /**
      * @var int Verdadero Positivo
@@ -48,64 +32,33 @@ class ConfusionMatrix extends SymfonyCommand {
      */
     private $_fn;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct(int $tp, int $tn, int $fp, int $fn) {
+        $this->_tp = intval($tp);
+        $this->_tn = intval($tn);
+        $this->_fp = intval($fp);
+        $this->_fn = intval($fn);
     }
 
-    protected function main(InputInterface $input, OutputInterface $output) {
-        try {
-            $this->_input = $input;
-            $this->_output = $output;
-            $this->_displayHead();
-            $this->_setAttributes();
-            $this->_displayAttributes();
-            $this->_displayMetrics();
-        } catch (\ErrorException $ex) {
-            $output->writeln($ex->getMessage());
-        }
+    public function getTruePositive() {
+        return $this->_tp;
     }
 
-    private function _displayHead() {
-        $this->_output->writeln([
-            '',
-            '**** Matriz de Confusión ****',
-            '*****************************'
-        ]);
+    public function getTrueNegative() {
+        return $this->_tn;
     }
 
-    private function _setAttributes() {
-        $this->_tp = intval($this->_input->getArgument('tp'));
-        $this->_tn = intval($this->_input->getArgument('tn'));
-        $this->_fp = intval($this->_input->getArgument('fp'));
-        $this->_fn = intval($this->_input->getArgument('fn'));
+    public function getFalsePositive() {
+        return $this->_fp;
     }
 
-    private function _displayAttributes() {
-        $this->_output->writeln([
-            '',
-            'TP: Verdadero Positivo = ' . $this->_tp,
-            'TN: Verdadero Negativo = ' . $this->_tn,
-            'FP: Falso Positivo = ' . $this->_fp,
-            'FN: Falso Negativo = ' . $this->_fn,
-        ]);
-    }
-
-    private function _displayMetrics() {
-        $this->_output->writeln([
-            '',
-            'Sensitivity = ' . $this->_getSensitivity(),
-            'Specificity = ' . $this->_getSpecificity(),
-            'Precision = ' . $this->_getPrecision(),
-            'Accuracy = ' . $this->_getAccuracy(),
-            'F1 Score = ' . $this->_getF1Score(),
-            'Recall = ' . $this->_getRecall()
-        ]);
+    public function getFalseNegative() {
+        return $this->_fn;
     }
 
     /**
      * Devuelve la métrica de sensibilidad
      */
-    private function _getSensitivity() {
+    public function getSensitivity() {
         $divisor = $this->_tp + $this->_fn;
         return ($divisor > 0) ? round($this->_tp / $divisor, 4) : "";
     }
@@ -113,7 +66,7 @@ class ConfusionMatrix extends SymfonyCommand {
     /**
      * Devuelve la métrica de especificidad
      */
-    private function _getSpecificity() {
+    public function getSpecificity() {
         $divisor = $this->_fp + $this->_tn;
         return ($divisor > 0) ? round($this->_tn / $divisor, 4) : "";
     }
@@ -121,7 +74,7 @@ class ConfusionMatrix extends SymfonyCommand {
     /**
      * Devuelve la métrica de precisión
      */
-    private function _getPrecision() {
+    public function getPrecision() {
         $divisor = $this->_tp + $this->_fp;
         return ($divisor > 0) ? round($this->_tp / ($divisor), 4) : "";
     }
@@ -129,7 +82,7 @@ class ConfusionMatrix extends SymfonyCommand {
     /**
      * Devuelve la métrica de exactitud
      */
-    private function _getAccuracy() {
+    public function getAccuracy() {
         $divisor = $this->_tp + $this->_fp + $this->_tn + $this->_fn;
         return ($divisor > 0) ? round(($this->_tp + $this->_tn) / $divisor, 4) : "";
     }
@@ -137,7 +90,7 @@ class ConfusionMatrix extends SymfonyCommand {
     /**
      * Devuelve la métrica de F1 Score
      */
-    private function _getF1Score() {
+    public function getF1Score() {
         $divisor = 2 * $this->_tp + $this->_fp + $this->_fn;
         return ($divisor > 0) ? round((2 * $this->_tp) / $divisor, 4) : "";
     }
@@ -145,7 +98,7 @@ class ConfusionMatrix extends SymfonyCommand {
     /**
      * Devuelve la métrica de Exhaustividad (Recall)
      */
-    private function _getRecall() {
+    public function getRecall() {
         $divisor = $this->_tp + $this->_fn;
         return ($divisor > 0) ? round($this->_tp / $divisor, 4) : "";
     }
