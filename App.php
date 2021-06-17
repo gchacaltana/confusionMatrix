@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
+declare(strict_types = 1);
+
 /**
- * Aplicación
+ * Aplicación de consola: Matriz de Confusión
  *
  * Execution: ./App.php main <TP> <TN> <FP> <FN>
  *
